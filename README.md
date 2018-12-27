@@ -1,7 +1,9 @@
-# Windows-command-line-tool
-收集与Window系统维护，系统激活有关的常用的cmd,powershell工具集。
+# 批处理和powershell
+
+批处理（也叫bat）和powershell学习笔记，上传的pdf文档是我在看的。
+
 # 项目分为2部分
 * cmd部分
 * powershell部分
-  
-  每一部分，都会涉及相应知识的基础介绍，以及常用工具集。
+
+每一部分有我学习批处理和powershell做的笔记，以及做的一些小工具。
