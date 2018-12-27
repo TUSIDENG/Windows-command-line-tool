@@ -5,7 +5,7 @@
 
 title 一键IP
 set Net_mask=255.255.255.0
-set Net_gateway=10.10.76.254
+set Net_gateway=10.10.71.254
 set Net_dnsPra=114.114.114.114
 set Net_dnsOrder=8.8.8.8
 ::=============================================================
@@ -18,12 +18,17 @@ fltmc 1>nul 2>nul || (
   exit
 )
 ::=============================================================
-@echo 获取网络名称:
-@echo 根据命令结果输入网络名称
-netsh interface show interface | findstr "已连接"
-set /p NetConnection=":"
+echo 获得网络名称:
+netsh interface show interface | findstr "已连接" >network.txt
+
+for /f "tokens=4,5 usebackq" %%a in ("network.txt") do (
+    set NetConnection=%%a%%b
+)
+echo %NetConnection%
+del network.txt 2>nul 1>nul
+echo 网络名称获取完成...
 ::=============================================================
-:: ????
+:: 菜单
 :choice
 echo ============选择方法:============
 echo ============ 1:设置静态IP =============
@@ -35,7 +40,7 @@ if %var%==1 goto ipstatic
 if %var%==2 goto ipdhcp
 if %var%==q  exit
 ::=============================================================
-:: ??????IP
+:: 设置静态IP
 :ipstatic
 SET /P IP="输入IP:"
 echo 设置IP...
@@ -48,7 +53,6 @@ netsh interface ip add dns %NetConnection% %Net_dnsOrder% index=2 1>nul 2>nul
 
 echo **IP设置为：%IP%，设置成功**
 echo ^-^   ^-^  ^-^  ^-^  ^-^   ^-^  ^-^  ^-^
-echo =============================================================
 ping -n 1 127.1>nul 
 goto choice
 ::=============================================================
